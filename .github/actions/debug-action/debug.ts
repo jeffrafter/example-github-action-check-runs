@@ -16,13 +16,19 @@ const run = async (): Promise<void> => {
     const octokit: github.GitHub = new github.GitHub(process.env['GITHUB_TOKEN'] || '')
     const nwo = process.env['GITHUB_REPOSITORY'] || '/'
     const [owner, repo] = nwo.split('/')
-    const title = 'Automatic issue'
-    const issueResponse = await octokit.issues.create({
+
+    // (there should already be a check suite)
+    const name = 'debug-check-run'
+    // create a check run (is there one already?)
+    const checkResponse = octokit.checks.create({
       owner,
       repo,
-      title,
+      name,
+      head_sha: process.env['GITHUB_SHA'] || '',
     })
-    core.debug(`${issueResponse.data.number}`)
+    console.log({checkResponse})
+
+    // create an annotation with an action
   } catch (error) {
     core.setFailed(`Debug-action failure: ${error}`)
   }
