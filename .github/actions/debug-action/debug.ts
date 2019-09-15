@@ -43,7 +43,7 @@ const run = async (): Promise<void> => {
       details_url: 'https://rpl.cat',
       check_run_id: checkRun.id,
       output: {
-        title: 'Debug output title',
+        title: 'Cool title',
         summary: 'This is a :cool: **summary**!',
         // annotations: [
         //   {
@@ -62,13 +62,13 @@ const run = async (): Promise<void> => {
         //   },
         // ],
       },
-      // actions: [
-      //   {
-      //     label: 'Debug Anno Annotation',
-      //     description: 'Do something to debug with this action',
-      //     identifier: 'debug-anno-action',
-      //   },
-      // ],
+      actions: [
+        {
+          label: 'Debug Anno Annotation',
+          description: 'Do something to debug with this action',
+          identifier: 'debug-anno-action',
+        },
+      ],
     })
 
     // Update the check run to add text and images and annotations
