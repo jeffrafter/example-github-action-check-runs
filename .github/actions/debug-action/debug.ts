@@ -62,13 +62,13 @@ const run = async (): Promise<void> => {
           },
         ],
       },
-      // actions: [
-      //   {
-      //     label: 'Debug Anno Annotation',
-      //     description: 'Do something to debug with this action',
-      //     identifier: 'debug-anno-action',
-      //   },
-      // ],
+      actions: [
+        {
+          label: 'Fix',
+          identifier: 'fix_errors',
+          description: 'Allow us to fix these errors for you',
+        },
+      ],
     })
 
     // Update the check run to add text and images and annotations
