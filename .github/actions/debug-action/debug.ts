@@ -23,10 +23,20 @@ const run = async (): Promise<void> => {
       repo,
       ref: process.env['GITHUB_SHA'] || '',
     })
-    listSuitesResponse.data.check_suites.forEach(suite => {
-      console.log('>>>>>>>> SUITE')
-      console.log({suite})
+    const checkSuite = listSuitesResponse.data.total_count === 1 && listSuitesResponse.data.check_suites[0]
+    if (!checkSuite) return
+
+    const checkRunsResponse = await octokit.checks.listForSuite({
+      owner,
+      repo,
+      check_name: 'Debug',
+      check_suite_id: checkSuite.id,
     })
+    console.log({checkRunsResponse})
+    // listSuitesResponse.data.check_suites.forEach(suite => {
+    //   console.log('>>>>>>>> SUITE')
+    //   console.log({suite})
+    // })
 
     // create a check run (even though there is one already)
     const name = 'debug-check-run'
