@@ -45,30 +45,30 @@ const run = async (): Promise<void> => {
       output: {
         title: 'Cool title',
         summary: 'This is a :cool: **summary**!',
-        // annotations: [
-        //   {
-        //     path: '.github/actions/debug-action/debug.ts',
-        //     start_line: 1,
-        //     end_line: 1,
-        //     annotation_level: 'warning',
-        //     message: 'Hey this section of the code is awesome',
-        //     title: 'READ THIS IF YOU DARE',
-        //   },
-        // ],
-        // images: [
-        //   {
-        //     alt: 'Give cats CPR',
-        //     image_url: 'https://rpl.cat/images/mouth-to-cat.png',
-        //   },
-        // ],
+        annotations: [
+          {
+            path: '.github/actions/debug-action/debug.ts',
+            start_line: 1,
+            end_line: 1,
+            annotation_level: 'warning',
+            message: 'Hey this section of the code is awesome',
+            title: 'READ THIS IF YOU DARE',
+          },
+        ],
+        images: [
+          {
+            alt: 'Give cats CPR',
+            image_url: 'https://rpl.cat/images/mouth-to-cat.png',
+          },
+        ],
       },
-      actions: [
-        {
-          label: 'Debug Anno Annotation',
-          description: 'Do something to debug with this action',
-          identifier: 'debug-anno-action',
-        },
-      ],
+      // actions: [
+      //   {
+      //     label: 'Debug Anno Annotation',
+      //     description: 'Do something to debug with this action',
+      //     identifier: 'debug-anno-action',
+      //   },
+      // ],
     })
 
     // Update the check run to add text and images and annotations
