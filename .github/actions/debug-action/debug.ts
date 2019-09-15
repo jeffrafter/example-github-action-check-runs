@@ -23,13 +23,10 @@ const run = async (): Promise<void> => {
       repo,
       ref: process.env['GITHUB_SHA'] || '',
     })
-    console.log('BEGIN LIST SUITES RESPONSE')
-    console.log({listSuitesResponse})
-    core.debug(JSON.stringify(listSuitesResponse.data))
-    console.log('END LIST SUITES RESPONSE')
-    // listSuitesResponse.data.forEach(suite => {
-    //   console.log({suite})
-    // })
+    listSuitesResponse.data.check_suites.forEach(suite => {
+      console.log('>>>>>>>> SUITE')
+      console.log({suite})
+    })
 
     // create a check run (even though there is one already)
     const name = 'debug-check-run'
