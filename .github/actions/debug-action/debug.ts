@@ -64,9 +64,9 @@ const run = async (): Promise<void> => {
       },
       actions: [
         {
-          label: 'Debug Annotation Action',
+          label: 'Debug Anno Annotation',
           description: 'Do something to debug with this action',
-          identifier: 'debug-annotation-action',
+          identifier: 'debug-anno-action',
         },
       ],
     })
