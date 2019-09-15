@@ -26,29 +26,64 @@ const run = async (): Promise<void> => {
     const checkSuite = listSuitesResponse.data.total_count === 1 && listSuitesResponse.data.check_suites[0]
     if (!checkSuite) return
 
+    // There is already a check-run for this action
     const checkRunsResponse = await octokit.checks.listForSuite({
       owner,
       repo,
       check_name: 'Debug',
       check_suite_id: checkSuite.id,
     })
-    console.log({checkRunsResponse})
-    // listSuitesResponse.data.check_suites.forEach(suite => {
-    //   console.log('>>>>>>>> SUITE')
-    //   console.log({suite})
-    // })
+    const checkRun = checkRunsResponse.data.total_count === 1 && checkRunsResponse.data.check_runs[0]
+    if (!checkRun) return
+    console.log({checkRun})
 
-    // create a check run (even though there is one already)
-    const name = 'debug-check-run'
-    const checkResponse = await octokit.checks.create({
+    await octokit.checks.update({
       owner,
       repo,
-      name,
-      head_sha: process.env['GITHUB_SHA'] || '',
+      details_url: 'https://rpl.cat',
+      check_run_id: checkRun.id,
+      output: {
+        title: 'Debug output title',
+        summary: 'This is a :cool: **summary**!',
+        annotations: [
+          {
+            path: '.github/actions/debug-action/debug.ts',
+            start_line: 40,
+            end_line: 55,
+            annotation_level: 'warning',
+            message: 'Hey this section of the code is awesome',
+            title: 'READ THIS IF YOU DARE',
+          },
+        ],
+        images: [
+          {
+            alt: 'Give cats CPR',
+            image_url: 'https://rpl.cat/images/mouth-to-cat.png',
+          },
+        ],
+      },
+      actions: [
+        {
+          label: 'Debug Annotation Action',
+          description: 'Do something to debug with this action',
+          identifier: 'debug-annotation-action',
+        },
+      ],
     })
-    console.log({checkResponse})
+
+    // Update the check run to add text and images and annotations
 
     // create an annotation with an action
+
+    // create a check run (even though there is one already)
+    // const name = 'debug-check-run'
+    // const checkResponse = await octokit.checks.create({
+    //   owner,
+    //   repo,
+    //   name,
+    //   head_sha: process.env['GITHUB_SHA'] || '',
+    // })
+    // console.log({checkResponse})
   } catch (error) {
     core.setFailed(`Debug-action failure: ${error}`)
   }
