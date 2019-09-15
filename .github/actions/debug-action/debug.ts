@@ -48,8 +48,8 @@ const run = async (): Promise<void> => {
         annotations: [
           {
             path: '.github/actions/debug-action/debug.ts',
-            start_line: 40,
-            end_line: 55,
+            start_line: 1,
+            end_line: 1,
             annotation_level: 'warning',
             message: 'Hey this section of the code is awesome',
             title: 'READ THIS IF YOU DARE',
