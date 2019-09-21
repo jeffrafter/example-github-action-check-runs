@@ -3,16 +3,6 @@ import * as github from '@actions/github'
 
 const run = async (): Promise<void> => {
   try {
-    const creature = core.getInput('amazing-creature')
-    if (creature === 'mosquito') {
-      core.setFailed('Sorry, mosquitos are not amazing 🚫🦟')
-      return
-    }
-    const pusherName = github.context.payload.pusher.name
-    const message = `👋 Hello ${pusherName}! You are an amazing ${creature}! 🙌`
-    core.debug(message)
-    core.setOutput('amazing-message', message)
-
     const octokit: github.GitHub = new github.GitHub(process.env['GITHUB_TOKEN'] || '')
     const nwo = process.env['GITHUB_REPOSITORY'] || '/'
     const [owner, repo] = nwo.split('/')
@@ -26,19 +16,57 @@ const run = async (): Promise<void> => {
     const checkSuite = listSuitesResponse.data.total_count === 1 && listSuitesResponse.data.check_suites[0]
     if (!checkSuite) return
 
+    // There is already a check-run for this action and SHA in the suite
     const checkRunsResponse = await octokit.checks.listForSuite({
       owner,
       repo,
       check_name: 'Debug',
       check_suite_id: checkSuite.id,
     })
-    console.log({checkRunsResponse})
-    // listSuitesResponse.data.check_suites.forEach(suite => {
-    //   console.log('>>>>>>>> SUITE')
-    //   console.log({suite})
-    // })
+    const checkRun = checkRunsResponse.data.total_count === 1 && checkRunsResponse.data.check_runs[0]
+    if (!checkRun) return
 
-    // create a check run (even though there is one already)
+    // Log the check run
+    console.log({checkRun})
+
+    // Update it with a bunch of weird things
+    await octokit.checks.update({
+      owner,
+      repo,
+      details_url: 'https://rpl.cat',
+      check_run_id: checkRun.id,
+      output: {
+        title: 'Cool title',
+        summary: 'This is a :cool: **summary**!',
+        text:
+          'Hey friends! Welcome to the text that tells us everything about this check run. You deserve amazing thinigs and are a great person.',
+        annotations: [
+          {
+            path: '.github/actions/debug-action/debug.ts',
+            start_line: 1,
+            end_line: 1,
+            annotation_level: 'notice',
+            message: 'Hey this section of the code is awesome',
+            title: 'READ THIS IF YOU NOTICE',
+          },
+        ],
+        images: [
+          {
+            alt: 'Give cats CPR',
+            image_url: 'https://rpl.cat/images/mouth-to-cat.png',
+          },
+        ],
+      },
+      actions: [
+        {
+          label: 'Fix',
+          identifier: 'fix_errors',
+          description: 'Allow us to fix these errors for you',
+        },
+      ],
+    })
+
+    // Create another check run (even though there is one already)
     const name = 'debug-check-run'
     const checkResponse = await octokit.checks.create({
       owner,
@@ -47,8 +75,6 @@ const run = async (): Promise<void> => {
       head_sha: process.env['GITHUB_SHA'] || '',
     })
     console.log({checkResponse})
-
-    // create an annotation with an action
   } catch (error) {
     core.setFailed(`Debug-action failure: ${error}`)
   }
