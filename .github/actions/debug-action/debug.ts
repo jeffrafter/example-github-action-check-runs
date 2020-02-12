@@ -15,6 +15,7 @@ const run = async (): Promise<void> => {
     })
     const checkSuite = listSuitesResponse.data.total_count === 1 && listSuitesResponse.data.check_suites[0]
     if (!checkSuite) return
+    console.log({checkSuite})
 
     // There is already a check-run for this action and SHA in the suite
     const checkRunsResponse = await octokit.checks.listForSuite({
@@ -30,7 +31,7 @@ const run = async (): Promise<void> => {
     console.log({checkRun})
 
     // Update it with a bunch of weird things
-    await octokit.checks.update({
+    const updatedCheckRun = await octokit.checks.update({
       owner,
       repo,
       details_url: 'https://rpl.cat',
@@ -65,6 +66,7 @@ const run = async (): Promise<void> => {
         },
       ],
     })
+    console.log({updatedCheckRun})
 
     // Create another check run (even though there is one already)
     const name = 'debug-check-run'
