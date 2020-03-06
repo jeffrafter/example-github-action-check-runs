@@ -15,6 +15,7 @@ const run = async (): Promise<void> => {
     console.log('\x1b[36m%s\x1b[0m', 'I am cyan');  //cyan
     console.log('\x1b[33m%s\x1b[0m', 'I am yellow');  //yellow
 
+    /*
     Reset = "\x1b[0m"
     Bright = "\x1b[1m"
     Dim = "\x1b[2m"
@@ -40,11 +41,11 @@ const run = async (): Promise<void> => {
     BgMagenta = "\x1b[45m"
     BgCyan = "\x1b[46m"
     BgWhite = "\x1b[47m"
-    
+    */
     console.log("Another")
     console.log("\033[31m this will be red \033[91m and this will be normal")
     
-    console.log("" + BgGreen + " THIS IS ON GREEN")
+    console.log("" + "\x1b[42m" + " THIS IS ON GREEN")
     
     // Don't actually do anything
     return
