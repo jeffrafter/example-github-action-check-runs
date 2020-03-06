@@ -8,7 +8,8 @@ const run = async (): Promise<void> => {
     
     console.log('\x1b[36m%s\x1b[0m', 'I am cyan');  //cyan
     console.log('\x1b[33m%s\x1b[0m', 'I am yellow');  //yellow
-
+    console.log('I might be yellow... I might not be');
+    
     /*
     Reset = "\x1b[0m"
     Bright = "\x1b[1m"
