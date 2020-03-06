@@ -37,7 +37,7 @@ const run = async (): Promise<void> => {
     BgWhite = "\x1b[47m"
     */
     console.log("Another")
-    console.log("\033[31m this will be red \033[91m and this will be normal")
+    //console.log("\033[31m this will be red \033[91m and this will be normal")
     
     console.log("" + "\x1b[42m" + " THIS IS ON GREEN")    
   } catch (error) {
