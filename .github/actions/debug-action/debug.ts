@@ -1,13 +1,7 @@
 import * as core from '@actions/core'
-import * as github from '@actions/github'
 
 const run = async (): Promise<void> => {
-  try {
-    const octokit: github.GitHub = new github.GitHub(process.env['GITHUB_TOKEN'] || '')
-    const nwo = process.env['GITHUB_REPOSITORY'] || '/'
-    const [owner, repo] = nwo.split('/')
-
-    
+  try {    
     console.log("😍😍😍😍😍😍😍😍😍😍😍😍")
     console.log("🤷‍♂️🤷‍♂️🤷‍♂️🤷‍♂️🤷‍♂️🤷‍♂️🤷‍♂️")
     console.log("🤷‍♂️")
